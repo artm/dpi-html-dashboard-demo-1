@@ -18,5 +18,7 @@ module Demo1
     config.active_record.whitelist_attributes = true
     config.assets.enabled = true
     config.assets.version = '1.0'
+
+    config.sass.preferred_syntax = :sass
   end
 end
