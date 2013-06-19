@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617075605) do
+ActiveRecord::Schema.define(:version => 20130619143806) do
+
+  create_table "conditions", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "hospital_conditions", :force => true do |t|
+    t.integer  "hospital_id"
+    t.integer  "condition_id"
+    t.integer  "eligible_discharges"
+    t.integer  "hospital_acquired_conditions"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
 
   create_table "hospitals", :force => true do |t|
     t.string   "name"
@@ -21,10 +36,8 @@ ActiveRecord::Schema.define(:version => 20130617075605) do
     t.integer  "zip"
     t.string   "owner"
     t.string   "type"
-    t.integer  "hospital_acquired_conditions_count"
-    t.integer  "eligible_discharges_count"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
