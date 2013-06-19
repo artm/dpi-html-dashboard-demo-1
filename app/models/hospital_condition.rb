@@ -1,5 +1,6 @@
 class HospitalCondition < ActiveRecord::Base
-  attr_accessible :condition_id, :eligible_discharges, :hospital_acquired_conditions, :hospital_id
+  attr_accessible :condition_id, :eligible_discharges, :hospital_acquired_conditions, :hospital_id,
+    :condition
 
   belongs_to :hospital
   belongs_to :condition
