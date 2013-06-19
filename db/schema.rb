@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619143806) do
+ActiveRecord::Schema.define(:version => 20130619160446) do
 
   create_table "conditions", :force => true do |t|
     t.string   "title"
@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(:version => 20130619143806) do
     t.string   "state"
     t.integer  "zip"
     t.string   "owner"
-    t.string   "type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "hospital_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end
