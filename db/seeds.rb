@@ -37,7 +37,7 @@ module DemoCsvLoader
         state: row['State'],
         zip: row['ZIP'],
         owner: row['Hospital Owner'],
-        type: row['Hospital Type'])
+        hospital_type: row['Hospital Type'])
   end
 end
 
