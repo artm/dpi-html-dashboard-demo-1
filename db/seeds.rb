@@ -1,29 +1,14 @@
 require 'csv'
 
 module DemoCsvLoader
-  CsvOptions = { headers: true, header_converters: proc{|header| header.strip } }
-
-  def condition_csv_files
-    Dir[ File.join File.dirname(Rails.root), '*.csv' ]
-  end
-
-  def clear_tables
-    Hospital.delete_all
-    Condition.delete_all
-    HospitalCondition.delete_all
-  end
 
   def load_csv_files
     clear_tables
     condition_csv_files.each do |path|
-      condition_title = File.basename(path,'.csv').sub('_Rates','').humanize
-      condition = Condition.create(title: condition_title)
+      condition = Condition.create(title: condition_title_from_csv_path(path))
       CSV.foreach(path,CsvOptions) do |row|
         hospital = hospital_from_csv(row)
-        hospital.stats.create(
-          condition: condition,
-          eligible_discharges: row['# eligible discharges'],
-          hospital_acquired_conditions: row['# HACs'])
+        hospital_condition_from_csv( hospital, condition, row )
       end
     end
   end
@@ -39,6 +24,29 @@ module DemoCsvLoader
         owner: row['Hospital Owner'],
         hospital_type: row['Hospital Type'])
   end
+
+  def hospital_condition_from_csv hospital, condition, row
+    hospital.stats.create(
+      condition: condition,
+      eligible_discharges: row['# eligible discharges'],
+      hospital_acquired_conditions: row['# HACs'])
+  end
+
+  def condition_csv_files
+    Dir[ File.join( File.dirname(Rails.root), '*.csv' ) ]
+  end
+
+  def clear_tables
+    Hospital.delete_all
+    Condition.delete_all
+    HospitalCondition.delete_all
+  end
+
+  def condition_title_from_csv_path path
+    File.basename(path,'.csv').sub('_Rates','').humanize
+  end
+
+  CsvOptions = { headers: true, header_converters: proc{|header| header.strip } }
 end
 
 extend DemoCsvLoader
