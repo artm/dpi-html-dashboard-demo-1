@@ -14,6 +14,6 @@ class ApiController < ApplicationController
   private
 
   def list_model model
-    render json: model.all.to_json
+    render json: model.all.to_json(except: %w(created_at updated_at))
   end
 end
