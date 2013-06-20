@@ -15,6 +15,7 @@ class ApiController < ApplicationController
 
   def list_model model, options = {}
     options = options.deep_merge(except: %w(created_at updated_at))
-    render json: model.all.to_json( options )
+    data_set = model.limit(params[:limit]).offset(params[:offset])
+    render json: data_set.to_json( options )
   end
 end
