@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   def hospitals
-    list_model Hospital, include: { stats: { except: TimeStamps } }
+    list_model Hospital.includes(:stats), include: { stats: { except: TimeStamps } }
   end
 
   def conditions
@@ -13,9 +13,9 @@ class ApiController < ApplicationController
 
   private
 
-  def list_model model, options = {}
+  def list_model data_set, options = {}
     options = options.deep_merge(except: TimeStamps)
-    data_set = model.limit(params[:limit]).offset(params[:offset])
+    data_set = data_set.limit(params[:limit]).offset(params[:offset])
     render json: data_set.to_json( options )
   end
 
