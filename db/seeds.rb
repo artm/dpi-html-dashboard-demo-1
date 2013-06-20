@@ -1,14 +1,19 @@
 require 'csv'
+require 'benchmark'
 
 module DemoCsvLoader
 
   def load_csv_files
-    clear_tables
-    condition_csv_files.each do |path|
-      condition = Condition.create(title: condition_title_from_csv_path(path))
-      CSV.foreach(path,CsvOptions) do |row|
-        hospital = hospital_from_csv(row)
-        hospital_condition_from_csv( hospital, condition, row )
+    Benchmark.bm( LabelLength ) do |timer|
+      timer.report(label "Clearing the tables") { clear_tables }
+      condition_csv_files.each do |path|
+        timer.report(label "Importing #{File.basename path}") do
+          condition = Condition.create(title: condition_title_from_csv_path(path))
+          CSV.foreach(path,CsvOptions) do |row|
+            hospital = hospital_from_csv(row)
+            hospital_condition_from_csv( hospital, condition, row )
+          end
+        end
       end
     end
   end
@@ -47,7 +52,12 @@ module DemoCsvLoader
     File.basename(path,'.csv').sub('_Rates','').humanize
   end
 
+  def label string
+    string.truncate LabelLength
+  end
+
   CsvOptions = { headers: true, header_converters: proc{|header| header.strip } }
+  LabelLength = 30
 end
 
 extend DemoCsvLoader
