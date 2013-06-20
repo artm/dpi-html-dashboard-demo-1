@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619162627) do
+ActiveRecord::Schema.define(:version => 20130620052411) do
 
   create_table "conditions", :force => true do |t|
     t.string   "title"
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(:version => 20130619162627) do
     t.datetime "updated_at",                   :null => false
   end
 
+  add_index "hospital_conditions", ["condition_id"], :name => "index_hospital_conditions_on_condition_id"
+  add_index "hospital_conditions", ["eligible_discharges"], :name => "index_hospital_conditions_on_eligible_discharges"
+  add_index "hospital_conditions", ["hospital_acquired_conditions"], :name => "index_hospital_conditions_on_hospital_acquired_conditions"
+  add_index "hospital_conditions", ["hospital_id"], :name => "index_hospital_conditions_on_hospital_id"
+
   create_table "hospitals", :force => true do |t|
     t.string   "name"
     t.string   "address"
@@ -39,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20130619162627) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "hospitals", ["name"], :name => "index_hospitals_on_name"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
