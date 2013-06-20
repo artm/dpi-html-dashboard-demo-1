@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   def hospitals
-    list_model Hospital.includes(:stats), include: { stats: { except: TimeStamps } }
+    list_model Hospital.includes(:stats), methods: [:stats_hash]
   end
 
   def conditions
