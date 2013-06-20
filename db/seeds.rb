@@ -14,15 +14,16 @@ module DemoCsvLoader
   end
 
   def hospital_from_csv row
-    Hospital.find_by_name(row['Hospital name']) ||
-      Hospital.create(
-        name: row['Hospital name'],
-        address: row['Address'],
-        city: row['City'],
-        state: row['State'],
-        zip: row['ZIP'],
-        owner: row['Hospital Owner'],
-        hospital_type: row['Hospital Type'])
+    @@hospital_cache ||= {}
+    name = row['Hospital name']
+    @@hospital_cache[ name ] ||= Hospital.create(
+      name: name,
+      address: row['Address'],
+      city: row['City'],
+      state: row['State'],
+      zip: row['ZIP'],
+      owner: row['Hospital Owner'],
+      hospital_type: row['Hospital Type'])
   end
 
   def hospital_condition_from_csv hospital, condition, row
