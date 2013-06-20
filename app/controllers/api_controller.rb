@@ -13,7 +13,8 @@ class ApiController < ApplicationController
 
   private
 
-  def list_model model
-    render json: model.all.to_json(except: %w(created_at updated_at))
+  def list_model model, options = {}
+    options = options.deep_merge(except: %w(created_at updated_at))
+    render json: model.all.to_json( options )
   end
 end
