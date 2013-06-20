@@ -1,9 +1,19 @@
 class ApiController < ApplicationController
   def hospitals
-    render json: Hospital.all.to_json
+    list_model Hospital
   end
 
   def conditions
-    render json: Condition.all.to_json
+    list_model Condition
+  end
+
+  def hospital_conditions
+    list_model HospitalCondition
+  end
+
+  private
+
+  def list_model model
+    render json: model.all.to_json
   end
 end
