@@ -1,7 +1,7 @@
 require 'csv'
 
 module DemoCsvLoader
-  CsvOptions = { headers: true, converters: :numeric }
+  CsvOptions = { headers: true, header_converters: proc{|header| header.strip } }
 
   def condition_csv_files
     Dir[ File.join File.dirname(Rails.root), '*.csv' ]
