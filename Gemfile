@@ -5,6 +5,7 @@ gem 'pg'
 gem 'unicorn'
 gem "rails_admin"
 gem "devise"
+gem "ransack"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
