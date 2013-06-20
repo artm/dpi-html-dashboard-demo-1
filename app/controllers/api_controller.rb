@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   def hospitals
-    list_model Hospital
+    list_model Hospital, include: :stats
   end
 
   def conditions
