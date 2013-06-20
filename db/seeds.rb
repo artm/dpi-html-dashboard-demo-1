@@ -1,5 +1,7 @@
-require 'csv'
-require 'benchmark'
+END {
+  extend DemoCsvLoader
+  load_csv_files
+}
 
 module DemoCsvLoader
 
@@ -60,5 +62,7 @@ module DemoCsvLoader
   LabelLength = 30
 end
 
-extend DemoCsvLoader
-load_csv_files
+BEGIN {
+  require 'csv'
+  require 'benchmark'
+}
